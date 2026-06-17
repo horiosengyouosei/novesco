@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多次元検索センター - ノベスコ</title>
+    <style>
+        :root {
+            --primary-color: #1a252f;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --white: #ffffff;
+            --search-accent: #27ae60; /* 検索成功をイメージするグリーン */
+        }
+
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
+
+        /* グローバルナビゲーション */
+        header { background-color: var(--primary-color); color: var(--white); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--white); text-decoration: none; }
+        .logo span { color: var(--accent-color); }
+        nav a { color: #bdc3c7; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        nav a:hover, nav a.active { color: var(--white); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; }
+
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        
+        /* 検索ボックスの極上UI */
+        .search-wrapper {
+            background-color: var(--white); border-radius: 12px; padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; margin-bottom: 30px;
+        }
+        .search-bar-zone { display: flex; gap: 10px; margin-bottom: 15px; }
+        .search-input { flex-grow: 1; padding: 14px 20px; border-radius: 8px; border: 2px solid #cbd5e1; font-size: 16px; outline: none; transition: border 0.2s; }
+        .search-input:focus { border-color: var(--accent-color); }
+        .search-exec-btn { background-color: var(--accent-color); color: var(--white); border: none; padding: 0 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; }
+
+        /* クイックタグリスト */
+        .quick-tags { font-size: 13px; color: #64748b; }
+        .tag-link { display: inline-block; background: #e2e8f0; color: #475569; padding: 3px 8px; border-radius: 4px; text-decoration: none; margin-right: 6px; font-weight: bold; cursor: pointer; }
+        .tag-link:hover { background: var(--accent-color); color: var(--white); }
+
+        /* 検索結果カード */
+        .result-count-text { font-size: 14px; font-weight: bold; color: #64748b; margin-bottom: 15px; }
+        .results-grid { display: flex; flex-direction: column; gap: 15px; }
+        .result-card { background-color: var(--white); border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; transition: transform 0.2s; }
+        .result-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+
+        .result-badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; color: white; font-weight: bold; margin-right: 12px; display: inline-block; }
+        .badge-novel { background-color: #3498db; }
+        .badge-author { background-color: #9b59b6; }
+        .badge-char { background-color: #2ecc71; }
+        .badge-tag { background-color: #e67e22; }
+
+        .result-main a { font-size: 18px; font-weight: bold; color: var(--text-color); text-decoration: none; }
+        .result-main a:hover { color: var(--accent-color); text-decoration: underline; }
+        .result-sub { font-size: 12px; color: #7f8c8d; margin-top: 5px; }
+        
+        /* 社長指定：名前被り（同名キャラ）の差別化デザイン */
+        .duplicate-warning { color: #e74c3c; font-weight: bold; background: #fff5f5; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 10px; }
+
+        .result-action-btn { background: none; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 4px; font-size: 13px; color: #64748b; cursor: pointer; text-decoration: none; }
+        .result-action-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
+            <nav>
+                <a href="index.html">トップ</a>
+                <a href="ranking.html">4大ランキング</a>
+                <a href="reader.html">読書ページ</a>
+                <a href="board.html">マーケボード</a>
+                <a href="gate.html">持ち込みゲート</a>
+                <a href="mypage_author.html">作家マイページ</a>
+                <a href="mypage_reader.html">読者マイページ</a>
+                <a href="search.html" class="active">検索🔍</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-wrapper">
+            <h2 style="margin-top:0; font-size:20px; color:var(--primary-color);">🔍 ノベスコ多次元検索センター</h2>
+            <p style="font-size:13px; color:#7f8c8d; margin-top:-8px;">作品名・作者名・キャラクター名・属性タグから横断検索します。</p>
+            
+            <div class="search-bar-zone">
+                <input type="text" id="searchInput" class="search-input" placeholder="キーワードを入力（例：アルク、クロノス、職人気質...）" oninput="executeSearch()">
+                <button class="search-exec-btn" onclick="executeSearch()">検索</button>
+            </div>
+
+            <div class="quick-tags">
+                <span>🔥 人気のタグから探す:</span>
+                <span class="tag-link" onclick="injectTag('#職人気質')">#職人気質</span>
+                <span class="tag-link" onclick="injectTag('#孤独な天才')">#孤独な天才</span>
+                <span class="tag-link" onclick="injectTag('#ギャップ萌え')">#ギャップ萌え</span>
+            </div>
+        </div>
+
+        <div class="result-count-text" id="resultCount">ヒット数: 0 件</div>
+        <div class="results-grid" id="resultsArea">
+            </div>
+    </div>
+
+    <script>
+        // 社長指定の「同名キャラクター被り」を含んだマスターインデックスデータベース
+        const searchDatabase = [
+            // 作品（小説）
+            { type: 'novel', name: '機巧のアルケミスト', meta: '著者: クロノス | ジャンル: SFファンタジー', tags: ['#職人気質', '#孤独な天才'], targetUrl: 'reader.html' },
+            { type: 'novel', name: '異世界定食屋の朝', meta: '著者: タカシ | ジャンル: 日常ファンタジー', tags: ['#職人気質'], targetUrl: 'reader.html' },
+            { type: 'novel', name: 'シンギュラリティ・コード', meta: '著者: レイ | ジャンル: サイバーパンク', tags: ['#孤独な天才'], targetUrl: 'reader.html' },
+            
+            // 作者
+            { type: 'author', name: 'クロノス', meta: 'ノベスコ公認プロ契約 Aランク作家', tags: [], targetUrl: 'mypage_author.html' },
+            { type: 'author', name: 'タカシ', meta: '日常系小説のヒットメーカー', tags: [], targetUrl: 'mypage_author.html' },
+            
+            // キャラクター（★社長指定：名前が完全に被っている同名キャラデータを2名配置）
+            { type: 'character', name: 'アリス', parentNovel: 'シンギュラリティ・コード', meta: '特徴: 人間になりたがっている超高性能AIの少女。', tags: ['#ギャップ萌え'], isDuplicateName: true, targetUrl: 'reader.html' },
+            { type: 'character', name: 'アリス', parentNovel: '不思議の国の迷宮都市', meta: '特徴: 巨大なハンマーを振り回す、暴走気味のロリっ子戦士。', tags: ['#ギャップ萌え'], isDuplicateName: true, targetUrl: 'reader.html' },
+            
+            { type: 'character', name: 'エルザ', parentNovel: '機巧のアルケミスト', meta: '特徴: 冷徹な蒼い瞳と美しい銀髪の天才錬金術師。', tags: ['#孤独な天才', '#ギャップ萌え'], isDuplicateName: false, targetUrl: 'reader.html' },
+            { type: 'character', name: 'アルク', parentNovel: '機巧のアルケミスト', meta: '特徴: 機械を愛する見習い技師の少年。', tags: ['#職人気質'], isDuplicateName: false, targetUrl: 'reader.html' }
+        ];
+
+        function executeSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const area = document.getElementById('resultsArea');
+            const countDisplay = document.getElementById('resultCount');
+            
+            area.innerHTML = '';
+            
+            if (query === "") {
+                countDisplay.innerText = "ヒット数: 0 件 (キーワードを入力してください)";
+                return;
+            }
+
+            // 検索フィルタリングロジック（名前、メタ、内蔵タグのすべてに部分一致）
+            let filtered = searchDatabase.filter(item => {
+                return item.name.toLowerCase().includes(query) || 
+                       (item.meta && item.meta.toLowerCase().includes(query)) ||
+                       (item.parentNovel && item.parentNovel.toLowerCase().includes(query)) ||
+                       item.tags.some(t => t.toLowerCase().includes(query));
+            });
+
+            countDisplay.innerText = `ヒット数: ${filtered.length} 件`;
+
+            filtered.forEach(item => {
+                let badgeHTML = '';
+                let titleHTML = '';
+                let metaHTML = item.meta;
+
+                // 区分に応じたバッジとタイトルの出し分け
+                if (item.type === 'novel') {
+                    badgeHTML = `<span class="result-badge badge-novel">作品</span>`;
+                    titleHTML = `<a href="${item.targetUrl}">${item.name}</a>`;
+                } else if (item.type === 'author') {
+                    badgeHTML = `<span class="result-badge badge-author">作家</span>`;
+                    titleHTML = `<a href="${item.targetUrl}">${item.name} 👤</a>`;
+                } else if (item.type === 'character') {
+                    badgeHTML = `<span class="result-badge badge-char">キャラ</span>`;
+                    
+                    // ★★★ 社長指定：名前被りキャラの差別化ロジックの具現化 ★★★
+                    if (item.isDuplicateName) {
+                        titleHTML = `
+                            <a href="${item.targetUrl}">${item.name}</a> 
+                            <span class="duplicate-warning">⚠️【作品：${item.parentNovel}】の登場人物</span>
+                        `;
+                    } else {
+                        titleHTML = `<a href="${item.targetUrl}">${item.name}</a> <small style="color:#7f8c8d;">(${item.parentNovel})</small>`;
+                    }
+                }
+
+                // タグの露出表示
+                let tagsHTML = '';
+                if(item.tags && item.tags.length > 0) {
+                    tagsHTML = `<div style="margin-top:5px;">` + item.tags.map(t => `<span class="result-badge badge-tag" style="margin-right:4px; font-size:10px;">${t}</span>`).join('') + `</div>`;
+                }
+
+                area.innerHTML += `
+                    <div class="result-card">
+                        <div class="result-main">
+                            <div>${badgeHTML} ${titleHTML}</div>
+                            <div class="result-sub">${metaHTML}</div>
+                            ${tagsHTML}
+                        </div>
+                        <div>
+                            <a href="${item.targetUrl}" class="result-action-btn">詳細を開く ➔</a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // クイックタグ用
+        function injectTag(tagName) {
+            document.getElementById('searchInput').value = tagName;
+            executeSearch();
+        }
+    </script>
+</body>
+</html>

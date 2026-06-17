@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機巧のアルケミスト - ノベスコ読書ページ</title>
+    <style>
+        :root { --primary-color: #1a252f; --accent-color: #3498db; --bg-color: #f8f9fa; --text-color: #2c3e50; --white: #ffffff; --novel-bg: #fcfaf2; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); }
+        header { background-color: var(--primary-color); color: var(--white); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--white); text-decoration: none; }
+        .logo span { color: var(--accent-color); }
+        nav a { color: #bdc3c7; text-decoration: none; margin-left: 20px; }
+        nav a.active { color: var(--white); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; }
+
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        .novel-header { background-color: var(--white); padding: 30px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e2e8f0; }
+        .novel-title-area { display: flex; justify-content: space-between; align-items: flex-start; }
+        .novel-title { margin: 0 0 10px 0; font-size: 28px; }
+
+        /* 社長指定修正：作者名から作者ページへのジャンプ用リンク */
+        .author-link { color: var(--accent-color); font-weight: bold; text-decoration: none; }
+        .author-link:hover { text-decoration: underline; }
+
+        .episode-selector-zone { margin: 20px 0; background: #e8f4fd; padding: 15px; border-radius: 6px; display: flex; align-items: center; gap: 15px; }
+        .select-box-custom { padding: 6px 12px; border-radius: 4px; border: 1px solid var(--accent-color); font-size: 14px; outline: none; background: white; cursor: pointer; }
+
+        .novel-body { background-color: var(--novel-bg); padding: 50px; border-radius: 8px; font-size: 18px; line-height: 2.3; letter-spacing: 0.06em; white-space: pre-wrap; color: #111111; }
+        .char-link { color: var(--text-color); border-bottom: 1px dashed var(--accent-color); font-weight: bold; cursor: pointer; padding: 0 2px; }
+        .char-link:hover { background-color: rgba(52, 152, 219, 0.1); color: var(--accent-color); }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background-color: var(--white); padding: 30px; border-radius: 12px; width: 90%; max-width: 450px; position: relative; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #95a5a6; }
+        .modal-char-name { font-size: 22px; font-weight: bold; margin-bottom: 15px; border-bottom: 2px solid var(--accent-color); padding-bottom: 5px;}
+        .modal-char-quote { font-style: italic; color: #555; background: #f9f9f9; padding: 10px; border-left: 4px solid #ccc; margin: 15px 0; }
+
+        /* 社長指定修正：1位〜10位をプルダウン選定できる拡張型常駐装置 */
+        .ranker-widget { position: fixed; bottom: 20px; right: 20px; background-color: var(--primary-color); color: var(--white); padding: 15px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); z-index: 1500; width: 270px; }
+        .ranker-widget h4 { margin: 0 0 10px 0; font-size: 13px; text-align: center; color: var(--accent-color); border-bottom: 1px solid #34495e; padding-bottom: 5px; }
+        .ranker-section { margin-bottom: 12px; background: #2c3e50; padding: 8px; border-radius: 6px; }
+        .ranker-label { font-size: 11px; color: #bdc3c7; margin-bottom: 4px; display: block; }
+        .ranker-row { display: flex; gap: 5px; margin-bottom: 5px; }
+        .ranker-btn { background-color: var(--accent-color); color: var(--white); border: none; flex-grow: 1; padding: 6px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        .ranker-btn.active { background-color: #e74c3c; }
+        .rank-status { font-size: 11px; text-align: center; color: #2ecc71; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
+            <nav>
+                <a href="index.html">トップ</a>
+                <a href="ranking.html">4大ランキング</a>
+                <a href="reader.html" class="active">読書ページ</a>
+                <a href="board.html">マーケボード</a>
+                <a href="gate.html">持ち込みゲート</a>
+                <a href="mypage_author.html">作家マイページ</a>
+                <a href="mypage_reader.html">読者マイページ</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="novel-header">
+            <h1 class="novel-title">機巧のアルケミスト</h1>
+            <!-- 社長指定修正：作者名をクリックすると作者ページへジャンプ可能に -->
+            <p style="color:#7f8c8d; margin:0;">著者：<a href="mypage_author.html" class="author-link">クロノス 👤</a></p>
+            
+            <div class="episode-selector-zone">
+                <label style="font-weight:bold; font-size:14px; color:var(--primary-color);">📖 エピソード選択：</label>
+                <select id="episodeSelect" class="select-box-custom" onchange="changeEpisode()">
+                    <option value="1">第1話：青い歯車</option>
+                    <option value="2">第2話：蒸気機関の暴走</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="novel-body" id="novelBodyArea"></div>
+    </div>
+
+    <!-- 社長指定修正：1位〜10位を自由に選んでランク付けできる双方向相殺UI -->
+    <div class="ranker-widget">
+        <h4>📊 その場でWランク付けデスク</h4>
+        
+        <!-- 小説用 -->
+        <div class="ranker-section">
+            <span class="ranker-label">▼ この小説を何位にセットする？</span>
+            <div class="ranker-row">
+                <select id="novelRankChoice" class="select-box-custom" style="padding:4px; font-size:12px;">
+                    <option value="1">1位</option><option value="2" selected>2位</option><option value="3">3位</option>
+                    <option value="4">4位</option><option value="5">5位</option><option value="6">6位</option>
+                    <option value="7">7位</option><option value="8">8位</option><option value="9">9位</option><option value="10">10位</option>
+                </select>
+                <button class="ranker-btn" id="rankNovelBtn" onclick="toggleNovelRank()">登録する</button>
+            </div>
+            <div class="rank-status" id="novelRankStatus" style="color:#bdc3c7;">状態：【未登録】</div>
+        </div>
+
+        <!-- キャラ用 -->
+        <div class="ranker-section">
+            <span class="ranker-label">▼ 注目キャラを何位にセットする？</span>
+            <div class="ranker-row">
+                <select id="charRankChoice" class="select-box-custom" style="padding:4px; font-size:12px;">
+                    <option value="1" selected>1位</option><option value="2">2位</option><option value="3">3位</option>
+                    <option value="4">4位</option><option value="5">5位</option><option value="6">6位</option>
+                    <option value="7">7位</option><option value="8">8位</option><option value="9">9位</option><option value="10">10位</option>
+                </select>
+                <button class="ranker-btn" id="rankCharBtn" style="background-color:#2ecc71;" onclick="toggleCharRank()">登録する</button>
+            </div>
+            <div class="rank-status" id="charRankStatus" style="color:#bdc3c7;">状態：【未登録】</div>
+        </div>
+    </div>
+
+    <!-- モーダル -->
+    <div class="modal" id="charModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div class="modal-char-name" id="modalName"></div>
+            <div id="modalDesc" style="font-size: 14px; color: #555; margin:10px 0;"></div>
+            <div class="modal-char-quote" id="modalQuote"></div>
+        </div>
+    </div>
+
+    <script>
+        const episodesData = {
+            "1": { body: `第1章：青い歯車\n\n彼の名は<span class="char-link" onclick="openCharModal('アルク')">アルク</span>。機巧技師の見習いだ。\n\n現れたのは天才と名高い少女<span class="char-link" onclick="openCharModal('エルザ')">エルザ</span>だった。`, targetChar: "エルザ" },
+            "2": { body: `第2章：蒸気機関の暴走\n\n扉を蹴り開けたのは、街の警備隊長を務めるベテラン技師、<span class="char-link" onclick="openCharModal('クロード')">クロード</span>であった。`, targetChar: "クロード" }
+        };
+        const charData = {
+            'アルク': { desc: '見習い少年。', quote: '「同調させてみせる！」' },
+            'エルザ': { desc: '天才錬金術師。', quote: '「また無駄な実験を……」' },
+            'クロード': { desc: '警備隊長。', quote: '「下がっていろ、見習いども！」' }
+        };
+
+        let currentCharInWidget = "エルザ";
+
+        function changeEpisode() {
+            const epId = document.getElementById('episodeSelect').value;
+            document.getElementById('novelBodyArea').innerHTML = episodesData[epId].body;
+            currentCharInWidget = episodesData[epId].targetChar;
+        }
+
+        function openCharModal(name) {
+            document.getElementById('modalName').innerText = name;
+            document.getElementById('modalDesc').innerText = charData[name].desc;
+            document.getElementById('modalQuote').innerText = charData[name].quote;
+            document.getElementById('charModal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('charModal').style.display = 'none'; }
+        
+        // 可変ランク付けロジック（小説）
+        let isNovelRanked = false;
+        function toggleNovelRank() {
+            const btn = document.getElementById('rankNovelBtn');
+            const status = document.getElementById('novelRankStatus');
+            const choice = document.getElementById('novelRankChoice').value;
+            
+            if (!isNovelRanked) {
+                isNovelRanked = true; btn.innerText = "外す"; btn.classList.add('active');
+                status.innerText = `状態：【読者トップ10 第 ${choice} 位に設定中！】`;
+                status.style.color = "#2ecc71";
+                alert(`「機巧のアルケミスト」をご自身の読者ランキング【第 ${choice} 位】に登録しました！`);
+            } else {
+                isNovelRanked = false; btn.innerText = "登録する"; btn.classList.remove('active');
+                status.innerText = "状態：【未登録】"; status.style.color = "#bdc3c7";
+                alert("ランキングから除外しました。加算ポイントの自動【減算（マイナス）相殺】が完了しました。");
+            }
+        }
+
+        // 可変ランク付けロジック（キャラ）
+        let isCharRanked = false;
+        function toggleCharRank() {
+            const btn = document.getElementById('rankCharBtn');
+            const status = document.getElementById('charRankStatus');
+            const choice = document.getElementById('charRankChoice').value;
+            
+            if (!isCharRanked) {
+                isCharRanked = true; btn.innerText = "外す"; btn.style.backgroundColor = "#e74c3c";
+                status.innerText = `状態：【推しキャラ 第 ${choice} 位に設定中！】`;
+                status.style.color = "#2ecc71";
+                alert(`「${currentCharInWidget}」をご自身の推しキャラランキング【第 ${choice} 位】に登録しました！`);
+            } else {
+                isCharRanked = false; btn.innerText = "登録する"; btn.style.backgroundColor = "#2ecc71";
+                status.innerText = "状態：【未登録】"; status.style.color = "#bdc3c7";
+                alert(`${currentCharInWidget}をランキングから除外しました。自動減算相殺が完了しました。`);
+            }
+        }
+
+        changeEpisode();
+    </script>
+</body>
+</html>

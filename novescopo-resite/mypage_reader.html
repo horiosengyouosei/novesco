@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>読者マイページ - ノベスコ</title>
+    <style>
+        :root { --primary-color: #1a252f; --accent-color: #3498db; --bg-color: #f8f9fa; --text-color: #2c3e50; --white: #ffffff; --rank-gold: #f1c40f; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); }
+        header { background-color: var(--primary-color); color: var(--white); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--white); text-decoration: none; }
+        .logo span { color: var(--accent-color); }
+        nav a { color: #bdc3c7; text-decoration: none; margin-left: 20px; }
+        nav a.active { color: var(--white); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; }
+        
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        
+        /* 社長指定修正：完全に消えていた読者名「本の虫」ヘッダーの完全復元 */
+        .reader-welcome-bar { background: linear-gradient(135deg, #34495e, #2c3e50); color: white; padding: 25px; border-radius: 8px; margin-bottom: 25px; }
+        
+        .main-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .card { background-color: var(--white); border-radius: 8px; padding: 25px; border: 1px solid #e2e8f0; margin-bottom: 25px; }
+        .card-title { font-size: 18px; font-weight: bold; color: var(--primary-color); border-left: 4px solid var(--accent-color); padding-left: 10px; margin-top: 0; margin-bottom: 20px; }
+        
+        .rank-slot { display: flex; align-items: center; padding: 10px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 8px; }
+        .slot-num { font-weight: bold; width: 30px; color: #64748b; }
+        .slot-num.top-3 { color: var(--rank-gold); font-size: 18px; }
+        .slot-title { flex-grow: 1; font-weight: 500; font-size: 14px; }
+        .slot-title a, .follow-link { color: var(--text-color); text-decoration: none; font-weight: bold; }
+        .slot-title a:hover, .follow-link:hover { color: var(--accent-color); text-decoration: underline; }
+        .remove-slot-btn { background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 12px; font-weight: bold; padding: 4px 8px; }
+        
+        .follow-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed #e2e8f0; }
+        .follow-type { font-size: 11px; padding: 2px 6px; border-radius: 4px; color: white; font-weight: bold; margin-right: 10px; }
+        .type-author { background-color: #9b59b6; } .type-novel { background-color: #3498db; } .type-char { background-color: #2ecc71; }
+        .current-rank { font-size: 13px; font-weight: bold; color: #e74c3c; background: #fff5f5; padding: 2px 8px; border-radius: 12px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
+            <nav>
+                <a href="index.html">トップ</a>
+                <a href="ranking.html">4大ランキング</a>
+                <a href="reader.html">読書ページ</a>
+                <a href="board.html">マーケボード</a>
+                <a href="gate.html">持ち込みゲート</a>
+                <a href="mypage_author.html">作家マイページ</a>
+                <a href="mypage_reader.html" class="active">読者マイページ</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- 社長指定修正：消えていた読者名「本の虫」プロフィールの完全復活 -->
+        <div class="reader-welcome-bar">
+            <span style="font-size:12px; opacity:0.8; display:block;">WELCOME BACK, READER</span>
+            <strong style="font-size:24px;">読者アカウント：本の虫 さん 👑</strong>
+            <p style="margin:5px 0 0 0; font-size:13px; opacity:0.9;">現在、あなたが厳選した上位3作品に読者応援ポイントが連動付与されています。</p>
+        </div>
+
+        <div class="main-layout">
+            <!-- 左側（維持・リンク開通） -->
+            <div class="card">
+                <h2 class="card-title">📊 読者トップ10編成デスク</h2>
+                <div id="novelRankDesk">
+                    <div class="rank-slot" id="slot1">
+                        <span class="slot-num top-3">1</span>
+                        <span class="slot-title" id="title1"><a href="reader.html">📖 異世界定食屋の朝</a></span>
+                        <button class="remove-slot-btn" onclick="clearSlot(1, '異世界定食屋の朝')">外す</button>
+                    </div>
+                    <div class="rank-slot" id="slot2">
+                        <span class="slot-num top-3">2</span>
+                        <span class="slot-title" id="title2"><a href="reader.html">📖 機巧のアルケミスト</a></span>
+                        <button class="remove-slot-btn" onclick="clearSlot(2, '機巧のアルケミスト')">外す</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側（維持・リンク開通） -->
+            <div class="card">
+                <h2 class="card-title">👥 マイ・三位一体フォローリスト</h2>
+                <div class="follow-item">
+                    <div><span class="follow-type type-novel">小説</span><a href="reader.html" class="follow-link">📖 機巧のアルケミスト</a></div>
+                    <span class="current-rank">総合 2位</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function clearSlot(slotId, workName) {
+            const slotTitle = document.getElementById('title' + slotId);
+            alert(`【ポイント相殺】「${workName}」を除外したため、減算が完了しました。`);
+            slotTitle.innerHTML = "（未設定 - 空きスロット）";
+            slotTitle.style.color = "#cbd5e1";
+        }
+    </script>
+</body>
+</html>

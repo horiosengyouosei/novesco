@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ノベスコ編集部 ＆ 特選おすすめ3選</title>
+    <style>
+        :root {
+            --primary-color: #1a252f;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --white: #ffffff;
+            --editor-color: #9b59b6;
+            --gold: #d4af37;
+        }
+
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
+
+        header { background-color: var(--primary-color); color: var(--white); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--white); text-decoration: none; }
+        .logo span { color: var(--accent-color); }
+        nav a { color: #bdc3c7; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        nav a:hover, nav a.active { color: var(--white); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        
+        .page-header { background: linear-gradient(135deg, #1a252f, #34495e); color: var(--white); padding: 40px; border-radius: 12px; margin-bottom: 40px; text-align: center; border-bottom: 5px solid var(--gold); }
+        .page-header h1 { margin: 0 0 10px 0; font-size: 28px; letter-spacing: 2px; }
+
+        /* 編集長スペース */
+        .chief-card { background: linear-gradient(135deg, #fffdf4, #fdf6e2); border: 2px solid var(--gold); border-radius: 12px; padding: 30px; margin-bottom: 40px; display: flex; gap: 25px; align-items: center; box-shadow: 0 6px 15px rgba(212,175,55,0.1); }
+        .chief-avatar { width: 100px; height: 100px; background: var(--primary-color); color: var(--gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; border: 3px solid var(--gold); flex-shrink: 0; }
+        .chief-info h2 { margin: 0 0 10px 0; font-size: 22px; color: #785800; }
+        .chief-comment { font-size: 14px; line-height: 1.6; color: #5d4037; font-style: italic; }
+
+        /* 5人編集者グリッド */
+        .editors-grid { display: grid; grid-template-columns: 1fr; gap: 35px; }
+        .editor-section { background-color: var(--white); border-radius: 10px; border: 1px solid #e2e8f0; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.01); }
+        
+        .editor-profile { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; border-bottom: 2px solid #f1f2f6; padding-bottom: 15px; }
+        .editor-meta { display: flex; align-items: center; gap: 15px; }
+        .editor-badge { width: 50px; height: 50px; border-radius: 50%; color: white; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; }
+        .editor-name { font-size: 18px; font-weight: bold; color: var(--primary-color); }
+        .editor-specialty { font-size: 12px; color: #7f8c8d; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; margin-left: 10px; }
+
+        /* 👑 社長指定：有料アドバイス指名ボタン */
+        .select-editor-btn { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; border: none; padding: 8px 16px; font-size: 13px; font-weight: bold; border-radius: 20px; cursor: pointer; transition: opacity 0.2s; }
+        .select-editor-btn:hover { opacity: 0.9; }
+
+        /* イチオシ3選の並び */
+        .recommend-tier { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .work-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; transition: transform 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
+        .work-card:hover { transform: translateY(-3px); border-color: var(--accent-color); background: #fff; }
+        .work-rank { font-size: 11px; font-weight: bold; color: white; background: #34495e; padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 8px; }
+        
+        /* 👑 社長指定：作品名リンク */
+        .work-title-link { font-size: 16px; font-weight: bold; color: var(--text-color); text-decoration: none; display: block; margin: 0 0 6px 0; }
+        .work-title-link:hover { color: var(--accent-color); text-decoration: underline; }
+        
+        .work-review { font-size: 12px; color: #555; line-height: 1.5; background: white; padding: 10px; border-radius: 4px; border-left: 3px solid #cbd5e1; margin-top: 8px; flex-grow: 1; }
+
+        footer { text-align: center; padding: 40px 0; color: #7f8c8d; border-top: 1px solid #eee; margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
+            <nav>
+                <a href="index.html">トップ</a>
+                <a href="ranking.html">4大ランキング</a>
+                <a href="reader.html">読書ページ</a>
+                <a href="board.html">マーケボード</a>
+                <a href="gate.html">持ち込みゲート</a>
+                <a href="mypage_author.html">作家マイページ</a>
+                <a href="editors.html" class="active">編集部選書✨</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="page-header">
+            <h1>🏢 ノベスコ総本部・公認編集部ルーム</h1>
+            <p>ガチ採点を司る5人の個性派AI編集者と、すべてを統括する編集長が選ぶ「魂の3作」</p>
+        </div>
+
+        <div class="chief-card">
+            <div class="chief-avatar">🕶️</div>
+            <div class="chief-info">
+                <h2>【ノベスコ編集長】不破 厳一郎 (Fuwa Genichiro)</h2>
+                <div class="chief-comment">
+                    「よくぞノベスコの門を叩いてくれた。当編集部の5人は、AIの冷徹さと人間の情熱を併せ持つ精鋭たちだ。彼らが10,000点満点の中から『本当に震えた3作品』を毎月ここに並べる。プレミアム会員の作家は、この5人から自作の専属担当を自由に指名して朝夕の個別アドバイスをいつでも受けることができるぞ」
+                </div>
+            </div>
+        </div>
+
+        <div class="editors-grid">
+
+            <!-- 審査員1: テンポの鬼 -->
+            <div class="editor-section" style="border-top: 4px solid #e74c3c;">
+                <div class="editor-profile">
+                    <div class="editor-meta">
+                        <div class="editor-badge" style="background: #e74c3c;">⚡</div>
+                        <div>
+                            <span class="editor-name">編集1：速水 瞬 (Hayami Shun)</span>
+                            <span class="editor-specialty">専門：テンポ・プロット展開</span>
+                        </div>
+                    </div>
+                    <button class="select-editor-btn" style="background:#e74c3c;" onclick="assignEditor('速水 瞬', '⚡ テンポの鬼')">🎯 速水 瞬 を専属担当に指名する</button>
+                </div>
+                <div class="recommend-tier">
+                    <div class="work-card">
+                        <div>
+                            <span class="work-rank" style="background:#e74c3c;">瞬のイチオシ①</span>
+                            <!-- 👑 読書ページへの直通リンク -->
+                            <a href="reader.html" class="work-title-link">📖 秒速でダンジョン無双</a>
+                        </div>
+                        <div class="work-review">「1ページ目から即バトル、3ページ目で覚醒。無駄な日常描写を一切削ぎ落とした、脳髄に刺さる超スピード感が最高だ！」</div>
+                    </div>
+                    <div class="work-card">
+                        <div>
+                            <span class="work-rank" style="background:#e74c3c;">瞬のイチオシ②</span>
+                            <a href="reader.html" class="work-title-link">📖 リバイバル・チェイサー</a>
+                        </div>
+                        <div class="work-review">「タイムリープのテンポがすさまじい。引き伸ばしが1ミリもなく、ジェットコースターのように物語が加速する。」</div>
+                    </div>
+                    <div class="work-card">
+                        <div>
+                            <span class="work-rank" style="background:#e74c3c;">瞬のイチオシ③</span>
+                            <a href="reader.html" class="work-title-link">📖 10秒後の死線</a>
+                        </div>
+                        <div class="work-review">「全編クライマックス。削れる文字がどこにもない、極限までシェイプアップされたプロットの勝利。」</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 審査員5: キャラ愛の化身 -->
+            <div class="editor-section" style="border-top: 4px solid #e67e22;">
+                <div class="editor-profile">
+                    <div class="editor-meta">
+                        <div class="editor-badge" style="background: #e67e22;">💖</div>
+                        <div>
+                            <span class="editor-name">編集5：愛野 萌 (Aino Moe)</span>
+                            <span class="editor-specialty">専門：キャラクター魅力・エモ</span>
+                        </div>
+                    </div>
+                    <button class="select-editor-btn" style="background:#e67e22;" onclick="assignEditor('愛野 萌', '💖 キャラ愛の化身')">🎯 愛野 萌 を専属担当に指名する</button>
+                </div>
+                <div class="recommend-tier">
+                    <div class="work-card">
+                        <div>
+                            <span class="work-rank" style="background:#e67e22;">萌のイチオシ①</span>
+                            <a href="reader.html" class="work-title-link">📖 不思議の国の迷宮都市</a>
+                        </div>
+                        <div class="work-review">正式ジャンル：ファンタジー<br>「ヒロインのアリスちゃんが尊すぎて無理！ハンマーを笑顔で振り回すギャップ萌えに、全読者のハートが粉砕されます！」</div>
+                    </div>
+                    <div class="work-card">
+                        <div>
+                            <span class="work-rank" style="background:#e67e22;">萌のイチオシ②</span>
+                            <a href="reader.html" class="work-title-link">📖 寡黙な騎士の甘い夜</a>
+                        </div>
+                        <div class="work-review">「男主の不器用な優しさに全人類が悶絶する。キャラが生きて動いているからこそ書けるセリフの宝庫。」</div>
+                    </div>
+                    <div class="work-card">
+                        <div>
+                            <span class="work-rank" style="background:#e67e22;">萌のイチオシ③</span>
+                            <a href="reader.html" class="work-title-link">📖 呪われ人形の恋歌</a>
+                        </div>
+                        <div class="work-review">「関係性の構築がエモすぎて涙腺崩壊。この二人の結末を見届けるためなら、いくらでも課金します。」</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function assignEditor(name, title) {
+            // ローカルストレージに指名情報を保存（疑似データベース連動）
+            localStorage.setItem('assigned_editor_name', name);
+            localStorage.setItem('assigned_editor_title', title);
+            alert(`🎯 専属担当編集指名に成功！\n\nプレミアム特典により、これよりあなたの専属アドバイザーは【${name} 先生】に固定されます。\n「作家マイページ」に戻ると、${name}先生からの専門指導デスクが開設されています！`);
+            window.location.href = 'mypage_author.html';
+        }
+    </script>
+</body>
+</html>

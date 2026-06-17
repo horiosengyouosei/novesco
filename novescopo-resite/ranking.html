@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4大査定ランキング - ノベスコ</title>
+    <style>
+        :root { --primary-color: #1a252f; --accent-color: #3498db; --bg-color: #f8f9fa; --text-color: #2c3e50; --white: #ffffff; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); }
+        header { background-color: var(--primary-color); color: var(--white); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--white); text-decoration: none; }
+        .logo span { color: var(--accent-color); }
+        nav a { color: #bdc3c7; text-decoration: none; margin-left: 20px; }
+        nav a:hover, nav a.active { color: var(--white); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; }
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+
+        /* 社長指定修正：5大ランキング切り替えタブ（作家を追加） */
+        .tabs-container { display: flex; background-color: #e2e8f0; padding: 5px; border-radius: 8px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; background: none; border: none; padding: 12px; font-size: 13px; font-weight: bold; color: #64748b; cursor: pointer; border-radius: 6px; text-align: center; }
+        .tab-btn.active { background-color: var(--white); color: var(--primary-color); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+        .filter-bar { display: flex; justify-content: space-between; align-items: center; background-color: var(--white); padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .select-custom { padding: 8px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 14px; color: var(--text-color); outline: none; }
+        
+        .switch-container { display: flex; align-items: center; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .switch-input { display: none; }
+        .switch-label { position: relative; display: inline-block; width: 44px; height: 24px; background-color: #cbd5e1; border-radius: 12px; margin-right: 8px; transition: 0.3s; }
+        .switch-label::after { content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%; background-color: var(--white); top: 2px; left: 2px; transition: 0.3s; }
+        .switch-input:checked + .switch-label { background-color: var(--accent-color); }
+        .switch-input:checked + .switch-label::after { left: 22px; }
+
+        .ranking-list { display: flex; flex-direction: column; gap: 12px; }
+        .ranking-item { display: flex; align-items: center; background-color: var(--white); padding: 15px 25px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .rank-badge { font-size: 18px; font-weight: bold; width: 60px; color: #94a3b8; }
+        .item-info { flex-grow: 1; }
+        .item-title { font-size: 16px; font-weight: bold; color: var(--text-color); text-decoration: none; }
+        .item-meta { font-size: 12px; color: #94a3b8; }
+        
+        /* 著者用スペシャルリンク */
+        .author-clickable { color: #3498db; text-decoration: none; font-weight: bold; }
+        .author-clickable:hover { text-decoration: underline; }
+
+        .item-score-zone { text-align: right; }
+        .total-score { font-size: 18px; font-weight: bold; color: var(--primary-color); }
+        .score-breakdown { font-size: 11px; color: #94a3b8; }
+        .loading-trigger { text-align: center; padding: 20px; font-weight: bold; color: var(--accent-color); font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
+            <nav>
+                <a href="index.html">トップ</a>
+                <a href="ranking.html" class="active">4大ランキング</a>
+                <a href="reader.html">読書ページ</a>
+                <a href="board.html">マーケボード</a>
+                <a href="gate.html">持ち込みゲート</a>
+                <a href="mypage_author.html">作家マイページ</a>
+                <a href="mypage_reader.html">読者マイページ</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>📊 ノベスコ・多次元査定ランキング</h1>
+
+        <!-- 社長指定修正：作家ランキングタブ（⑤）を完全追加 -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchRanking('ai')">① 総合AI順</button>
+            <button class="tab-btn" onclick="switchRanking('hybrid')">② AI×読者合算順</button>
+            <button class="tab-btn" onclick="switchRanking('category')">③ 項目別ソート</button>
+            <button class="tab-btn" onclick="switchRanking('character')">④ 推しキャラ順</button>
+            <button class="tab-btn" onclick="switchRanking('authorTab')">⑤ 作家ランキング 👤</button>
+        </div>
+
+        <div class="filter-bar">
+            <div>
+                <select id="categorySelect" class="select-custom" disabled onchange="resetAndRender()">
+                    <option value="tempo">テンポ（展開力）</option>
+                    <option value="immersion">没入感（描写力）</option>
+                    <option value="gimmick">ギミック（構成力）</option>
+                    <option value="market">市場適合度（トレンド）</option>
+                    <option value="charScore">キャラクター魅力度</option>
+                </select>
+            </div>
+            <label class="switch-container">
+                <input type="checkbox" id="followFilter" class="switch-input" onchange="resetAndRender()">
+                <span class="switch-label"></span>
+                <span>マイフォローのみ表示</span>
+            </label>
+        </div>
+
+        <div class="ranking-list" id="infiniteRankingArea"></div>
+        <div class="loading-trigger" id="loadMoreTrigger">⬇️ 下へスクロールして自動読み込み</div>
+    </div>
+
+    <script>
+        const baseNovels = [
+            { title: '機巧のアルケミスト', author: 'クロノス', ai: 6850, reader: 2100, isFollow: true, tempo: 1850, immersion: 1200, gimmick: 1900, market: 900, charScore: 1000 },
+            { title: '異世界定食屋の朝', author: 'タカシ', ai: 6420, reader: 2700, isFollow: false, tempo: 1200, immersion: 1950, gimmick: 1000, market: 1100, charScore: 1170 }
+        ];
+        const baseChars = [
+            { title: 'エルザ', parentNovel: '機巧のアルケミスト', score: 15400000, isFollow: true, quote: "「また無駄な実験を」" }
+        ];
+        // 作家用シード
+        const baseAuthors = [
+            { name: 'クロノス', score: 28900, novels: '機巧のアルケミスト 他', isFollow: true },
+            { name: 'タカシ', score: 24200, novels: '异世界定食屋の朝 他', isFollow: false }
+        ];
+
+        let currentTab = 'ai';
+        let displayedCount = 0;
+        let masterFilteredData = [];
+
+        function filterAndSortMaster() {
+            let fullList = [];
+            
+            for(let i=0; i<1000; i++) {
+                if (currentTab === 'authorTab') {
+                    let base = baseAuthors[i % baseAuthors.length];
+                    fullList.push({
+                        type: 'author', title: i===0? base.name : `${base.name}_大御所_${i}`,
+                        meta: `代表作: ${base.novels}`, score: Math.max(1000, base.score - i * 25),
+                        isFollow: i % 3 === 0 ? true : base.isFollow
+                    });
+                } else if (currentTab === 'character') {
+                    let base = baseChars[i % baseChars.length];
+                    fullList.push({
+                        type: 'char', title: i===0? base.title : `${base.title}_${i}`,
+                        meta: `登場作品: ${base.parentNovel}`, score: Math.max(1000, base.score - i * 15000),
+                        isFollow: i % 3 === 0 ? true : base.isFollow
+                    });
+                } else {
+                    let base = baseNovels[i % baseNovels.length];
+                    fullList.push({
+                        type: 'novel', title: i===0? base.title : `${base.title} Vol.${i}`, author: base.author,
+                        ai: Math.max(1000, base.ai - i * 5), reader: Math.max(0, base.reader - i * 3),
+                        isFollow: i % 4 === 0 ? true : base.isFollow,
+                        tempo: base.tempo, immersion: base.immersion, gimmick: base.gimmick, market: base.market, charScore: base.charScore
+                    });
+                }
+            }
+
+            if (document.getElementById('followFilter').checked) {
+                fullList = fullList.filter(item => item.isFollow === true);
+            }
+
+            if (currentTab === 'ai') fullList.sort((a, b) => b.ai - a.ai);
+            else if (currentTab === 'hybrid') fullList.sort((a, b) => (b.ai + b.reader) - (a.ai + a.reader));
+            else if (currentTab === 'category') {
+                const cate = document.getElementById('categorySelect').value;
+                fullList.sort((a, b) => b[cate] - a[cate]);
+            } else if (currentTab === 'character' || currentTab === 'authorTab') {
+                fullList.sort((a, b) => b.score - a.score);
+            }
+
+            masterFilteredData = fullList;
+        }
+
+        function loadNextChunk() {
+            const area = document.getElementById('infiniteRankingArea');
+            const start = displayedCount;
+            const end = Math.min(masterFilteredData.length, start + 20);
+            
+            if (start >= masterFilteredData.length) return;
+
+            for (let i = start; i < end; i++) {
+                displayedCount++;
+                const item = masterFilteredData[i];
+                let scoreHTML = '', titleHTML = '', metaHTML = '';
+
+                if (item.type === 'novel') {
+                    // 社長指定修正：著者名リンクから作家マイページへ直通
+                    titleHTML = `<a href="reader.html" class="item-title">${item.title}</a>`;
+                    metaHTML = `著者: <a href="mypage_author.html" class="author-clickable">${item.author} 👤</a>`;
+                    scoreHTML = `<div class="total-score">${currentTab === 'ai' ? item.ai : item.ai + item.reader} pt</div>`;
+                } else if (item.type === 'char') {
+                    titleHTML = `<a href="reader.html" class="item-title">${item.title}</a>`;
+                    metaHTML = item.meta;
+                    scoreHTML = `<div class="total-score">${(item.score / 1000000).toFixed(1)}M</div>`;
+                } else if (item.type === 'author') {
+                    // 社長指定修正：作家名から作家マイページへ直通
+                    titleHTML = `<a href="mypage_author.html" class="item-title author-clickable">${item.title} 👤</a>`;
+                    metaHTML = item.meta;
+                    scoreHTML = `<div class="total-score">${item.score.toLocaleString()} pt</div><div class="score-breakdown">総資産戦闘力</div>`;
+                }
+
+                area.innerHTML += `
+                    <div class="ranking-item">
+                        <div class="rank-badge"># ${displayedCount}</div>
+                        <div class="item-info">
+                            ${titleHTML}
+                            <div class="item-meta">${metaHTML}</div>
+                        </div>
+                        <div class="item-score-zone">${scoreHTML}</div>
+                    </div>`;
+            }
+        }
+
+        function resetAndRender() {
+            document.getElementById('infiniteRankingArea').innerHTML = '';
+            displayedCount = 0; filterAndSortMaster(); loadNextChunk();
+        }
+
+        function switchRanking(tabType) {
+            currentTab = tabType;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('categorySelect').disabled = (tabType !== 'category');
+            resetAndRender();
+        }
+
+        const observer = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) loadNextChunk(); }, { threshold: 1.0 });
+        observer.observe(document.getElementById('loadMoreTrigger'));
+        resetAndRender();
+    </script>
+</body>
+</html>

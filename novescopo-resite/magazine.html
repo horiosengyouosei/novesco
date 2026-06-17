@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>週刊ノベスコ特設会場 - サバイバル連載</title>
+    <style>
+        :root { 
+            --primary-color: #1a252f; 
+            --accent-color: #e74c3c; /* 週刊誌の熱血な赤 */
+            --bg-color: #f4f6f7;
+            --text-color: #2c3e50;
+            --white: #ffffff;
+            --gold: #d4af37;
+        }
+
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
+
+        header { background-color: var(--primary-color); color: var(--white); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--white); text-decoration: none; }
+        .logo span { color: #3498db; }
+        nav a { color: #bdc3c7; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        nav a.active { color: var(--white); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        
+        /* 雑誌表紙風ヘッダー */
+        .magazine-cover-banner { background: linear-gradient(135deg, #c0392b, #1a252f); color: var(--white); padding: 40px; border-radius: 12px; margin-bottom: 35px; text-align: center; border: 4px solid var(--gold); box-shadow: 0 10px 25px rgba(0,0,0,0.15); position: relative; }
+        .magazine-cover-banner h1 { margin: 0; font-size: 36px; font-weight: 900; letter-spacing: 4px; text-shadow: 2px 2px 0px #000; }
+        .magazine-cover-banner h1 span { color: var(--gold); }
+        .magazine-badge { position: absolute; top: 20px; right: 20px; background: var(--gold); color: #000; padding: 5px 15px; font-weight: bold; border-radius: 4px; font-size: 12px; transform: rotate(5deg); }
+
+        /* 👑 社長指定：金額・配分率を完全排除した上品な読者向けダッシュボード */
+        .economy-info-box { background: #fff; border-radius: 8px; border: 1px solid #e2e8f0; padding: 20px; margin-bottom: 35px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: center; }
+        .eco-stat strong { font-size: 20px; color: var(--accent-color); display: block; margin-top: 5px; }
+        .eco-stat span { font-size: 12px; color: #7f8c8d; }
+
+        /* サバイバル連載作家一覧 */
+        .lineup-title { font-size: 18px; font-weight: bold; margin-bottom: 20px; border-left: 5px solid var(--accent-color); padding-left: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .lineup-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        
+        .serial-row { background-color: var(--white); border-radius: 8px; border: 1px solid #e2e8f0; padding: 20px; display: flex; align-items: center; justify-content: space-between; transition: transform 0.2s; }
+        .serial-row:hover { transform: scale(1.01); border-color: var(--accent-color); }
+        
+        .serial-main { display: flex; align-items: center; gap: 20px; }
+        .serial-rank { width: 35px; height: 35px; border-radius: 50%; background: #34495e; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; }
+        .serial-rank.gold-rank { background: var(--gold); color: black; }
+        .serial-rank.danger { background: #e74c3c; animation: blink 1.5s infinite; }
+        
+        .work-meta h3 { margin: 0 0 5px 0; font-size: 16px; }
+        .work-meta h3 a { color: var(--text-color); text-decoration: none; }
+        .work-meta h3 a:hover { color: #3498db; text-decoration: underline; }
+        .author-tag { font-size: 12px; color: #7f8c8d; }
+        .担当スカウト { font-size: 11px; background: #e8f4fd; color: #3498db; padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: bold; }
+
+        .vote-zone { display: flex; align-items: center; gap: 20px; text-align: right; }
+        .vote-count { font-size: 18px; font-weight: bold; color: var(--text-color); }
+        .vote-btn { background: var(--accent-color); color: white; border: none; padding: 8px 18px; font-weight: bold; border-radius: 20px; cursor: pointer; font-size: 13px; }
+        .vote-btn:hover { background: #c0392b; }
+
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
+            <nav>
+                <a href="index.html">トップ</a>
+                <a href="ranking.html">4大ランキング</a>
+                <a href="reader.html">読書ページ</a>
+                <a href="board.html">マーケボード</a>
+                <a href="gate.html">持ち込みゲート</a>
+                <a href="mypage_author.html">作家マイページ</a>
+                <a href="magazine.html" class="active">週刊ノベスコ📕</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- 雑誌表紙風ヘッダー -->
+        <div class="magazine-cover-banner">
+            <div class="magazine-badge">プレミアム限定誌 👑</div>
+            <h1>週刊<span>ノベスコ</span> 第24号</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 13px; letter-spacing: 1px;">
+                5人の公式編集者がスカウトした精鋭10名による、血戦のサバイバル連載空間。
+            </p>
+        </div>
+
+        <!-- 👑 金額や還元率を完全に隠蔽した、高尚でクリーンな規定ボード -->
+        <div class="economy-info-box">
+            <div class="eco-stat">
+                <span>📕 雑誌購読パス（月額）</span>
+                <strong>500 pt / 月</strong>
+            </div>
+            <div class="eco-stat" style="border: none;">
+                <span>🚨 サバイバル連載規約</span>
+                <strong style="color:#e74c3c;">人気投票最下位 2 名が自動入れ替え</strong>
+            </div>
+        </div>
+
+        <!-- 連載ラインナップ（10名） -->
+        <div class="lineup-title">
+            <span>📕 読者人気投票 ＆ 連載サバイバルレース（全10枠）</span>
+            <span style="font-size:12px; color:#e74c3c;">※毎週日曜日24時に集計。あなたの1票が作家の連載継続を左右します</span>
+        </div>
+
+        <div class="lineup-grid">
+            
+            <!-- 1位 -->
+            <div class="serial-row" style="border-left: 5px solid var(--gold); background: #fffdfb;">
+                <div class="serial-main">
+                    <div class="serial-rank gold-rank">1</div>
+                    <div class="work-meta">
+                        <h3><a href="reader.html">📖 機巧のアルケミスト</a><span class="担当スカウト">詭弁 巧 スカウト作</span></h3>
+                        <span class="author-tag">著者：クロノス先生</span>
+                    </div>
+                </div>
+                <div class="vote-zone">
+                    <div class="vote-count" style="color:#d4af37;">14,230 票</div>
+                    <button class="vote-btn" onclick="castMagazineVote('機巧のアルケミスト')">👍 投票</button>
+                </div>
+            </div>
+
+            <!-- 2位 -->
+            <div class="serial-row">
+                <div class="serial-main">
+                    <div class="serial-rank">2</div>
+                    <div class="work-meta">
+                        <h3><a href="reader.html">📖 不思議の国の迷宮都市</a><span class="担当スカウト">愛野 萌 スカウト作</span></h3>
+                        <span class="author-tag">著者：アリスファンクラブ先生</span>
+                    </div>
+                </div>
+                <div class="vote-zone">
+                    <div class="vote-count">11,050 票</div>
+                    <button class="vote-btn" onclick="castMagazineVote('不思議の国の迷宮都市')">👍 投票</button>
+                </div>
+            </div>
+
+            <!-- 9位（クビ寸前） -->
+            <div class="serial-row" style="border-left: 5px solid var(--accent-color); background: #fff5f5;">
+                <div class="serial-main">
+                    <div class="serial-rank danger">9</div>
+                    <div class="work-meta">
+                        <h3><a href="reader.html">📖 秒速でダンジョン無双</a><span class="担当スカウト">速水 瞬 スカウト作</span></h3>
+                        <span class="author-tag">著者：スピード狂先生 ⚠️【降格（入れ替え）ライン】</span>
+                    </div>
+                </div>
+                <div class="vote-zone">
+                    <div class="vote-count" style="color:var(--accent-color);">1,890 票</div>
+                    <button class="vote-btn" onclick="castMagazineVote('秒速でダンジョン無双')">👍 投票</button>
+                </div>
+            </div>
+
+            <!-- 10位（クビ寸前） -->
+            <div class="serial-row" style="border-left: 5px solid var(--accent-color); background: #fff5f5;">
+                <div class="serial-main">
+                    <div class="serial-rank danger">10</div>
+                    <div class="work-meta">
+                        <h3><a href="reader.html">📖 悪役令嬢の経済学</a><span class="担当スカウト">金城 豪 スカウト作</span></h3>
+                        <span class="author-tag">著者：マネーハック先生 ⚠️【降格（入れ替え）ライン】</span>
+                    </div>
+                </div>
+                <div class="vote-zone">
+                    <div class="vote-count" style="color:var(--accent-color);">1,210 票</div>
+                    <button class="vote-btn" onclick="castMagazineVote('悪役令嬢の経済学')">👍 投票</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function castMagazineVote(title) {
+            alert(`👍 投票完了！\n\n「${title}」にサバイバル連載の清き1票を投じました。\n下位2名の入れ替えは毎週日曜日の24時に執行されます。上の順位に這い上がるほど作家が報われる超リアルサバイバルレースです！`);
+        }
+    </script>
+</body>
+</html>

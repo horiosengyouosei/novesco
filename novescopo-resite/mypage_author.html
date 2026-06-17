@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作家マイページ - ノベスコサバイバル</title>
+    <style>
+        :root { 
+            --primary-color: #1a252f; 
+            --accent-color: #3498db; 
+            --bg-color: #f8f9fa; 
+            --text-color: #2c3e50; 
+            --white: #ffffff; 
+            --editor-color: #9b59b6; 
+            --notice-color: #e67e22; 
+            --premium-gold: #d4af37; 
+        }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
+        header { background-color: var(--primary-color); color: var(--white); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--white); text-decoration: none; }
+        .logo span { color: var(--accent-color); }
+        nav a { color: #bdc3c7; text-decoration: none; margin-left: 20px; }
+        nav a.active { color: var(--white); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; }
+        
+        .main-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .dashboard-card { background-color: var(--white); border-radius: 8px; padding: 25px; border: 1px solid #e2e8f0; margin-bottom: 25px; }
+        .author-profile-bar { background: linear-gradient(135deg, #1a252f, #2c3e50); color: white; padding: 25px; border-radius: 8px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--premium-gold); }
+        .premium-status-badge { background: linear-gradient(135deg, #f1c40f, #d4af37); color: #1a252f; font-size: 12px; padding: 6px 15px; border-radius: 20px; font-weight: bold; }
+
+        .card-title { font-size: 18px; font-weight: bold; color: var(--primary-color); border-left: 4px solid var(--accent-color); padding-left: 10px; margin-top: 0; margin-bottom: 20px; }
+        .score-board-container { background: #fffdf4; border: 2px solid var(--premium-gold); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 25px; }
+        .grand-total-display { font-size: 48px; font-weight: bold; color: #e74c3c; margin: 5px 0; }
+        
+        /* 👑 新設：ドリームロードマップ用のデザイン */
+        .roadmap-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; text-align: left; }
+        .roadmap-step { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; font-size: 11px; position: relative; }
+        .roadmap-step.active-step { border-color: var(--premium-gold); background: #fffdf4; }
+        .roadmap-step strong { font-size: 12px; color: var(--primary-color); display: block; margin-bottom: 4px; }
+
+        .editor-box { background: #fbeffa; border-left: 5px solid var(--editor-color); padding: 15px; border-radius: 0 6px 6px 0; margin-bottom: 15px; font-size: 13px; }
+        .editor-name-tag { font-size: 15px; color: var(--primary-color); font-weight: bold; display: block; margin-bottom: 8px; }
+        .writer-salary-box { background: linear-gradient(135deg, #fffcf0, #fff7d6); border: 1px solid var(--premium-gold); padding: 15px; border-radius: 6px; margin-top: 12px; font-size: 12px; color: #785800; line-height: 1.6; }
+
+        .video-studio-box { background: #fafbfc; border: 2px dashed var(--premium-gold); padding: 25px; border-radius: 12px; }
+        .video-btn-premium { background: linear-gradient(135deg, #f1c40f, #e67e22); color: white; border: none; padding: 12px 30px; font-size: 15px; font-weight: bold; border-radius: 30px; cursor: pointer; width: 100%; margin-top: 15px; }
+        .my-works-list { display: flex; flex-direction: column; gap: 10px; }
+        .my-work-item { background: #f8fafc; padding: 12px 15px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .notification-panel { background-color: var(--white); border-radius: 8px; border: 1px solid #e2e8f0; padding: 20px; height: fit-content; position: sticky; top: 90px; }
+        .notice-item { background-color: #fff9f5; border-left: 4px solid var(--notice-color); padding: 12px; border-radius: 0 6px 6px 0; font-size: 13px; }
+        .survival-alert-banner { background-color: #e8f4fd; border-left: 5px solid var(--accent-color); padding: 15px; border-radius: 4px; font-size: 13px; margin-bottom: 25px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
+            <nav>
+                <a href="index.html">トップ</a>
+                <a href="ranking.html">4大ランキング</a>
+                <a href="reader.html">読書ページ</a>
+                <a href="board.html">マーケボード</a>
+                <a href="gate.html">持ち込みゲート</a>
+                <a href="mypage_author.html" class="active">作家マイページ</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="author-profile-bar">
+            <div>
+                <span style="font-size:12px; opacity:0.8; display:block;">NOVESC AUTHOR PROFILE</span>
+                <strong style="font-size:24px;">作家名：クロノス 先生 👤</strong>
+            </div>
+            <div><span class="premium-status-badge">✨ プレミアムサブスクプラン契約中</span></div>
+        </div>
+
+        <!-- 👑 社長指定：連載を目指す全プレミアム作家がいつでも見られる「ドリームロードマップ」 -->
+        <div class="dashboard-card" style="border-color: var(--premium-gold); background: linear-gradient(180deg, #ffffff, #fffdf9);">
+            <h2 class="card-title" style="border-left-color: var(--premium-gold);">🏆 ノベスコ公認・連載作家ドリームロードマップ</h2>
+            <p style="font-size:12px; color:#64748b; margin:0 0 15px 0;">連載未獲得の作家様も共通の仕様です。プレミアム会員から選出される「10枠」の先に待つ、圧倒的なプロの権利一覧。</p>
+            
+            <div class="roadmap-container">
+                <div class="roadmap-step">
+                    <strong>STEP 01：連載スカウト</strong>
+                    プレミアム限定。5人AI査定と読者情熱点で上位を維持すると、編集部から完全新作の連載オファーが届きます。
+                </div>
+                <div class="roadmap-step">
+                    <strong>STEP 02：50%対等分配</strong>
+                    週刊ノベスコ（1冊200円/月1000円）の売上の半分（50%）をプロ連載陣10名だけで順位に応じて傾斜分配！
+                </div>
+                <div class="roadmap-step">
+                    <strong>STEP 03：名誉完結・電子化</strong>
+                    見事1〜3位でサバイバル連載を完結した作品は、ノベスコ出版が全自動で電子書籍化！印税40%が永続還元されます。
+                </div>
+                <div class="roadmap-step active-step">
+                    <strong>👑 FINAL：自動アニメ化</strong>
+                    データ実証済みの看板作には、アニメ業界からの打診が殺到。社長による窓口一元化＆AIアシスト監修により、契約から分配（50%）まで自動で回ります。
+                </div>
+            </div>
+        </div>
+
+        <div class="main-layout">
+            <div>
+                <!-- スコアボード -->
+                <div class="score-board-container">
+                    <span style="font-size:12px; font-weight:bold; color:var(--premium-gold);">🏆 現在のリアルタイム多次元合算スコア</span>
+                    <h3 style="margin: 5px 0 0 0; font-size:18px;">機巧のアルケミスト</h3>
+                    <div class="grand-total-display">8,120 <span style="font-size:18px; color:#64748b;">/ 10,000 点</span></div>
+                </div>
+
+                <!-- 専属担当編集室 -->
+                <div class="dashboard-card" style="border-color: var(--editor-color);">
+                    <h2 class="card-title" style="border-left-color: var(--editor-color);">👥 専属担当編集室（週刊ノベスコ・楽屋裏通信）</h2>
+                    <div class="editor-box">
+                        <span class="editor-name-tag">👤 担当編集：愛野 萌 先生（💖 キャラ愛の化身）</span>
+                        <div>
+                            「クロノス先生ぇ！見てくれましたか上のロードマップ！うちら編集部がプレミアム作家様の中から先生を見つけ出した時の感動が蘇ります！アニメ会社さんからのラブコールが来ても、窓口は社長が一元化してくれてるし、利益もハーフ＆ハーフ（50:50）だから安心ですよっ！」
+                            <div class="writer-salary-box">
+                                <strong>💰 クロノス先生専用・今週の印税配分ステータス（50:50 黄金比率適用）</strong><br>
+                                ・現在の連載順位：**第 1 位** | 今週の確定分配印税：**＋ 375,000 円**
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 動画生成デスク -->
+                <div class="dashboard-card" style="border-color: var(--premium-gold);">
+                    <h2 class="card-title" style="border-left-color: var(--premium-gold);">🎬 SNS紹介用·AI文字アニメーションPV制作デスク</h2>
+                    <div class="video-studio-box">
+                        <button class="video-btn-premium" onclick="alert('🎬 生成完了！')">🎲 指定した仕様でPV動画を書き出す（0 pt）</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側通知 -->
+            <div class="notification-panel">
+                <h3 style="margin-top:0; color: var(--notice-color);">🚨 リアルタイム評価通知</h3>
+                <div class="notice-list"><div class="notice-item">👤 読者がトップ10に設定！</div></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

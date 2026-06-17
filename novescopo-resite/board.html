@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マーケ・フィードバック・ボード - ノベスコ</title>
+    <style>
+        :root {
+            --primary-color: #1a252f;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --white: #ffffff;
+            --board-accent: #2ecc71; /* マーケ部の知的なグリーン */
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* グローバルナビゲーション */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            text-decoration: none;
+        }
+        .logo span { color: var(--accent-color); }
+        nav a {
+            color: #bdc3c7;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        nav a:hover, nav a.active {
+            color: var(--white);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .board-header {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .board-header h1 { margin: 0 0 10px 0; font-size: 26px; }
+        .board-header p { margin: 0; font-size: 14px; opacity: 0.9; }
+
+        /* レポートカード（Markdown風デザイン） */
+        .report-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
+            line-height: 1.8;
+        }
+
+        .report-card h2 {
+            font-size: 22px;
+            color: var(--primary-color);
+            border-bottom: 2px solid #2ecc71;
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .report-card h3 {
+            font-size: 18px;
+            color: #27ae60;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .report-card h3::before {
+            content: "■";
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .report-card p {
+            margin-bottom: 15px;
+            font-size: 15px;
+            color: #34495e;
+        }
+
+        /* 重要ハイライト・箇条書き */
+        .highlight-box {
+            background-color: #ebf7ee;
+            border-left: 4px solid #2ecc71;
+            padding: 15px 20px;
+            border-radius: 0 6px 6px 0;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        /* 属性タグ */
+        .tag {
+            display: inline-block;
+            background-color: #f1f2f6;
+            color: #57606f;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .tag-trend {
+            background-color: #ffeaa7;
+            color: #d63031;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #7f8c8d;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 全ページ共通グローバルナビゲーション -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
+            <nav>
+                <a href="index.html">トップ</a>
+                <a href="ranking.html">4大ランキング</a>
+                <a href="reader.html">読書ページ</a>
+                <a href="board.html" class="active">マーケボード</a>
+                <a href="gate.html">持ち込みゲート</a>
+                <a href="mypage_author.html">作家マイページ</a>
+                <a href="mypage_reader.html">読者マイページ</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="board-header">
+            <h1>📢 マーケ・フィードバック・ボード</h1>
+            <p>毎週月曜日更新：読者の「フォロー」と「トップ10行動」からAIとマーケ部が弾き出した最先端トレンド分析</p>
+        </div>
+
+        <!-- トレンド分析レポート本体 -->
+        <div class="report-card">
+            <h2>第1回 トレンド分析 ＆ 作家育成フィードバックレポート</h2>
+            <p>ノベスコ作家の皆様、今週も素晴らしい作品の持ち込みをありがとうございます。マーケティング部です。新設された「三位一体フォロー機能」および「読書中の即時ランク付け機能」のデータログの解析が完了しました。現在、サイト内で爆発的にフォロワーを増やしている作品の共通属性をレポートとして公開します。</p>
+
+            <h3>1. 現在の市場適合トレンド：読者が「推したい」キャラクター属性</h3>
+            <p>読者が読書中にその場で『推しキャラトップ10』に組み込んでいるキャラクターの動きを追跡したところ、以下の属性タグを持つキャラクターへの投票集中度が劇的に跳ね上がっています。</p>
+            <div>
+                <span class="tag tag-trend">🔥 急上昇</span> <span class="tag">#ギャップ萌え</span>
+                <span class="tag">#孤独な天才</span>
+                <span class="tag">#職人気質</span>
+                <span class="tag">#不器用主人公</span>
+            </div>
+            <div class="highlight-box">
+                <strong>💡 マーケ部データ分析：</strong><br>
+                現在ランキング上位の『機巧のアルケミスト』に登場する「エルザ（孤独な天才少女）」や「アルク（不器用な少年）」が、まさにこのトレンドの直撃を受けています。読者は「完璧な超人」よりも「どこかに致命的な欠落や孤独を抱えたキャラ」を熱狂的にフォローする傾向にあります。
+            </div>
+
+            <h3>2. フォロワー爆増・トップ10入りを狙うための即効アドバイス</h3>
+            <p>AI査定（7,000点満点）で高得点を維持しつつ、読者合算（3,000点満点）を最大化してトップ10圏内に食い込むための具体的チェックリストです。今すぐ作品の執筆・修正にお役立てください。</p>
+            <ul>
+                <li><strong>セリフ一言のインパクトを研磨せよ</strong>：AIが自動抽出するキャラクターの特徴的なセリフは、読者がポップアップで確認する際の最初のフックになります。作者編集デスクで、最もキャラの個性が際立つセリフへとブラッシュアップ（上書き）してください。</li>
+                <li><strong>第1章〜第3章に「感情の揺らぎ」を配置せよ</strong>：読者が読書中の装置でトップ10に入れるタイミングは、キャラクターが普段見せない一面（弱み、内に秘めた熱意）を見せた瞬間に集中しています。</li>
+                <li><strong>見出しで世界観を定義せよ</strong>：ネタバレ防止機能により、読者は作者様が作成した見出しと公式レビューを頼りに作品を選びます。ここで「どのようなカタルシスが得られるか」を明確に言語化してください。</li>
+            </ul>
+
+            <h3>3. 総指揮・経理部からの次週予告</h3>
+            <p>現在、投稿フォーム（作品持ち込みゲート）に、Gemini APIの安定運用を目的とした「短編10万字／連載合計50万字」の厳格な文字数制限バリデーションがまもなく実装されます。文字数オーバーによるエラーを防ぐため、作品のスマートな構成（無駄な引き延ばしの排除）を意識したプロット構築を推奨いたします。</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Novescopo Publishing Inc. All Rights Reserved. 社長専用プレサイト開発用ビルド</p>
+    </footer>
+
+</body>
+</html>
