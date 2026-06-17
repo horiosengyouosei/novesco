@@ -15,7 +15,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
         header { background-color: var(--primary-color); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        .logo { font-size: 24px; font-weight: bold; color: white; text-decoration: none; }
+        .logo { font-size: 24px; font-weight: bold; color: white; text-decoration: none; text-transform: none !important; }
         .logo span { color: #3498db; }
         nav ul { display: flex; list-style: none; gap: 15px; }
         nav ul li a { color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; padding: 5px 10px; }
@@ -40,23 +40,24 @@
 
         /* スマートフォン向け（画面幅768px以下）の完全レスポンシブ設定 */
         @media (max-width: 768px) {
-            header { flex-direction: column; gap: 10px; text-align: center; }
-            nav ul { flex-wrap: wrap; justify-content: center; gap: 8px; }
-            nav ul li a { font-size: 12px; padding: 3px 6px; }
-            .hero-section { padding: 30px 15px; margin: 10px; }
-            .hero-section h1 { font-size: 20px; }
-            .recommend-banner { margin: 10px; padding: 20px; }
-            .recommend-banner h2 { font-size: 15px; }
-            .main-container { margin: 10px; padding: 15px; }
-            .ranking-container { flex-direction: column; gap: 15px; }
-            .ranking-card { width: 100%; }
+            header { flex-direction: column !important; gap: 12px !important; text-align: center !important; padding: 15px 10px !important; }
+            nav ul { flex-wrap: wrap !important; justify-content: center !important; gap: 8px !important; }
+            nav ul li a { font-size: 12px !important; padding: 4px 8px !important; background-color: rgba(255,255,255,0.05); border-radius: 4px; }
+            nav ul li a.active { border-bottom: none !important; background-color: #3498db !important; color: white !important; }
+            .hero-section { padding: 30px 15px !important; margin: 10px !important; }
+            .hero-section h1 { font-size: 20px !important; line-height: 1.4 !important; }
+            .recommend-banner { margin: 10px !important; padding: 20px 15px !important; }
+            .recommend-banner h2 { font-size: 15px !important; }
+            .main-container { margin: 10px !important; padding: 15px !important; }
+            .ranking-container { flex-direction: column !important; gap: 15px !important; }
+            .ranking-card { width: 100% !important; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="#" class="logo">NOVESC<span>OPPO</span></a>
+    <a href="#" class="logo">novesc<span>oppo</span></a>
     <nav>
         <ul>
             <li><a href="#" class="active">トップ</a></li>
@@ -77,7 +78,7 @@
 
 <div class="recommend-banner">
     <h2>🤔 今日何を読むか、迷っていませんか？</h2>
-    <a href="#" class="btn-orange"> Harrison今日のおすすめ小説を開く </a>
+    <a href="#" class="btn-orange"> 今日のおすすめ小説を開く </a>
 </div>
 
 <div class="main-container">
@@ -91,7 +92,7 @@
         <div class="ranking-card">
             <h3>② AI×読者合算ランキング</h3>
             <div class="rank-item"><span class="rank-number">1</span><a href="#" class="rank-title">機巧のアルケミスト</a><span class="rank-score">9120 pt</span></div>
-            <div class="rank-item"><span class="rank-number">2</span><a href="#" class="rank-title">異世界定食屋の朝</a><span class="rank-score">9000 pt</span></div>
+            <div class="rank-item"><span class="rank-item"><span class="rank-number">2</span><a href="#" class="rank-title">異世界定食屋の朝</a><span class="rank-score">9000 pt</span></div>
         </div>
         <div class="ranking-card">
             <h3>④ 推しキャラランキング</h3>
