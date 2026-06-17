@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ノベルスコッパー（ノベスコ）- 本社トップページ</title>
+    <style>
+        :root { --primary-color: #1a252f; --accent-color: #3498db; --bg-color: #f8f9fa; --text-color: #2c3e50; --white: #ffffff; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
+        header { background-color: var(--primary-color); color: var(--white); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--white); text-decoration: none; }
+        .logo span { color: var(--accent-color); }
+        nav a { color: #bdc3c7; text-decoration: none; margin-left: 20px; font-size: 16px; }
+        nav a.active { color: var(--white); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; }
+        main { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        
+        .hero-section { background: linear-gradient(135deg, #2c3e50, #1a252f); color: var(--white); border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 25px; }
+        .gacha-zone { background: linear-gradient(135deg, #ff9f43, #ee5253); border-radius: 12px; padding: 25px; text-align: center; margin-bottom: 40px; color: var(--white); }
+        .gacha-btn { background-color: var(--white); color: #ee5253; border: none; padding: 12px 35px; font-size: 18px; font-weight: bold; border-radius: 30px; cursor: pointer; margin-top: 10px; }
+
+        .section-title { font-size: 22px; border-left: 4px solid var(--primary-color); padding-left: 10px; margin-bottom: 20px; }
+        .ranking-preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .rank-card { background-color: var(--white); border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #eef2f5; }
+        .rank-card h3 { margin-top: 0; color: var(--primary-color); border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .rank-item { display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px dashed #f1f1f1; }
+        .rank-item-main { display: flex; align-items: center; width: 100%; }
+        .rank-number { font-weight: bold; width: 30px; color: var(--accent-color); }
+        .rank-number.top-3 { color: #e74c3c; font-size: 18px; }
+        .rank-title { flex-grow: 1; text-decoration: none; color: var(--text-color); font-weight: 500; }
+        .rank-title:hover { color: var(--accent-color); text-decoration: underline; }
+        
+        /* 社長指定修正：著者リンク用の青文字装飾 */
+        .author-link { color: #3498db; text-decoration: none; font-weight: bold; font-size: 12px; margin-left: 30px; margin-top: -5px; }
+        .author-link:hover { text-decoration: underline; }
+
+        .rank-score { font-size: 12px; color: #7f8c8d; background: #f1f2f6; padding: 2px 6px; border-radius: 4px; }
+        .rank-char-quote { font-size: 12px; color: #7f8c8d; font-style: italic; margin-left: 30px; margin-top: 2px; border-left: 2px solid #cbd5e1; padding-left: 6px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
+            <nav>
+                <a href="index.html" class="active">トップ</a>
+                <a href="ranking.html">4大ランキング</a>
+                <a href="reader.html">読書ページ</a>
+                <a href="board.html">マーケボード</a>
+                <a href="gate.html">持ち込みゲート</a>
+                <a href="mypage_author.html">作家マイページ</a>
+                <a href="mypage_reader.html">読者マイページ</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-section">
+            <h1>5人AI査定×読者トップ10で決まる次世代電子出版</h1>
+            <p>ノベルスコッパーへようこそ。</p>
+        </div>
+
+        <div class="gacha-zone">
+            <h3>🤔 今日何を読むか、迷っていませんか？</h3>
+            <button class="gacha-btn" onclick="window.location.href='reader.html'">🎲 日替わりおすすめ小説を開く</button>
+        </div>
+
+        <h2 class="section-title">📊 本日の中央注目ランキング（👑 TOP10）</h2>
+        <div class="ranking-preview-grid">
+            <div class="rank-card"><h3>① 総合AIランキング (TOP10)</h3><div id="ai-rank-list"></div></div>
+            <div class="rank-card"><h3>② AI×読者合算ランキング</h3><div id="hybrid-rank-list"></div></div>
+            <div class="rank-card"><h3>④ 推しキャラランキング</h3><div id="char-rank-list"></div></div>
+        </div>
+    </main>
+
+    <script>
+        const dummyNovels = [{title: "機巧のアルケミスト", author: "クロノス"}, {title: "異世界定食屋の朝", author: "タカシ"}, {title: "シンギュラリティ・コード", author: "レイ"}, {title: "東京ダンジョン・ウォー", author: "ブレイド"}, {title: "鋼鉄の覇王", author: "シン"}, {title: "魔法少女は引退したい", author: "アキ"}, {title: "漆黒 of ギルド", author: "レン"}, {title: "迷宮都市の調香師", author: "ルイ"}, {title: "ログアウト不可", author: "テツ"}, {title: "神々のダイコロ", author: "カミ"}];
+        const dummyChars = [{name: "エルザ", novel: "機巧のアルケミスト"}, {name: "コタロー", novel: "異世界定食屋の朝"}];
+
+        const aiList = document.getElementById('ai-rank-list');
+        const hybridList = document.getElementById('hybrid-rank-list');
+        const charList = document.getElementById('char-rank-list');
+
+        for(let i=0; i<10; i++) {
+            const numClass = (i < 3) ? 'rank-number top-3' : 'rank-number';
+            
+            // ① 総合AIリスト（社長指定：作者名から作者ページへ飛べる導線を追加）
+            aiList.innerHTML += `
+                <div class="rank-item">
+                    <div class="rank-item-main">
+                        <span class="${numClass}">${i+1}</span>
+                        <a href="reader.html" class="rank-title">${dummyNovels[i].title}</a>
+                        <span class="rank-score">${6850 - i*100} pt</span>
+                    </div>
+                    <a href="mypage_author.html" class="author-link">👤 著者: ${dummyNovels[i].author}</a>
+                </div>`;
+            
+            // ② 合算リスト（社長指定：作者名から作者ページへ飛べる導線を追加）
+            hybridList.innerHTML += `
+                <div class="rank-item">
+                    <div class="rank-item-main">
+                        <span class="${numClass}">${i+1}</span>
+                        <a href="reader.html" class="rank-title">${dummyNovels[i].title}</a>
+                        <span class="rank-score">${9120 - i*120} pt</span>
+                    </div>
+                    <a href="mypage_author.html" class="author-link">👤 著者: ${dummyNovels[i].author}</a>
+                </div>`;
+        }
+        
+        // ④ キャラリスト（維持）
+        for(let i=0; i<2; i++) {
+            charList.innerHTML += `<div class="rank-item"><div class="rank-item-main"><span class="rank-number top-3">${i+1}</span><span class="rank-title"><a href="reader.html" style="text-decoration:none; color:inherit; font-weight:bold;">${dummyChars[i].name}</a> <a href="reader.html" style="font-size:11px; color:#7f8c8d; text-decoration:none;">(${dummyChars[i].novel})</a></span><span class="rank-score">15.4M</span></div><div class="rank-char-quote">「おもしろい仕様変更ね」</div></div>`;
+        }
+    </script>
+</body>
+</html>
