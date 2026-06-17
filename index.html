@@ -3,145 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ノベルスコッパー（ノベスコ）- 本社トップページ</title>
+    <title>ノベルスコッパー（ノベスコ） - 本社トップページ</title>
     <style>
-        :root { --primary-color: #1a252f; --accent-color: #3498db; --bg-color: #f8f9fa; --text-color: #2c3e50; --white: #ffffff; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
-        header { background-color: var(--primary-color); color: var(--white); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 24px; font-weight: bold; color: var(--white); text-decoration: none; }
-        .logo span { color: var(--accent-color); }
-        nav a { color: #bdc3c7; text-decoration: none; margin-left: 20px; font-size: 16px; }
-        nav a.active { color: var(--white); border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; }
-        main { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        
-        .hero-section { background: linear-gradient(135deg, #2c3e50, #1a252f); color: var(--white); border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 25px; }
-        .gacha-zone { background: linear-gradient(135deg, #ff9f43, #ee5253); border-radius: 12px; padding: 25px; text-align: center; margin-bottom: 40px; color: var(--white); }
-        .gacha-btn { background-color: var(--white); color: #ee5253; border: none; padding: 12px 35px; font-size: 18px; font-weight: bold; border-radius: 30px; cursor: pointer; margin-top: 10px; }
+        :root {
+            --primary-color: #1a2b3c;
+            --secondary-color: #2c3e50;
+            --accent-color: #e67e22;
+            --bg-color: #f4f6f8;
+            --text-color: #333;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+        header { background-color: var(--primary-color); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 24px; font-weight: bold; color: white; text-decoration: none; }
+        .logo span { color: #3498db; }
+        nav ul { display: flex; list-style: none; gap: 15px; }
+        nav ul li a { color: #cbd5e1; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; padding: 5px 10px; }
+        nav ul li a:hover, nav ul li a.active { color: white; border-bottom: 2px solid #3498db; }
+        .hero-section { background: linear-gradient(135deg, #2c3e50 0%, #1a2b3c 100%); color: white; text-align: center; padding: 40px 20px; margin: 20px auto; max-width: 1200px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .hero-section h1 { font-size: 28px; margin-bottom: 15px; letter-spacing: 1px; }
+        .hero-section p { font-size: 14px; color: #b4c6d8; }
+        .recommend-banner { background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); margin: 20px auto; max-width: 1200px; padding: 25px; border-radius: 12px; text-align: center; color: white; box-shadow: 0 4px 15px rgba(255,126,95,0.3); }
+        .recommend-banner h2 { font-size: 18px; margin-bottom: 15px; }
+        .btn-orange { display: inline-block; background-color: white; color: #ff6a00; font-weight: bold; padding: 10px 30px; border-radius: 25px; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .btn-orange:hover { transform: translateY(-2px); }
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .section-title { font-size: 20px; border-left: 4px solid var(--primary-color); padding-left: 10px; margin-bottom: 20px; }
+        .ranking-container { display: flex; gap: 20px; justify-content: space-between; }
+        .ranking-card { flex: 1; background-color: var(--bg-color); border-radius: 8px; padding: 15px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+        .ranking-card h3 { margin-bottom: 15px; font-size: 15px; color: var(--primary-color); border-bottom: 2px solid #ddd; padding-bottom: 5px; }
+        .rank-item { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px dashed #ddd; font-size: 13px; }
+        .rank-number { font-weight: bold; width: 25px; color: var(--accent-color); }
+        .rank-title { flex-grow: 1; color: #2c3e50; text-decoration: none; font-weight: 500; }
+        .rank-title:hover { text-decoration: underline; }
+        .rank-score { font-size: 11px; color: #7f8c8d; }
 
-        .section-title { font-size: 22px; border-left: 4px solid var(--primary-color); padding-left: 10px; margin-bottom: 20px; }
-        .ranking-preview-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
-        .rank-card { background-color: var(--white); border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #eef2f5; }
-        .rank-card h3 { margin-top: 0; color: var(--primary-color); border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .rank-item { display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px dashed #f1f1f1; }
-        .rank-item-main { display: flex; align-items: center; width: 100%; }
-        .rank-number { font-weight: bold; width: 30px; color: var(--accent-color); }
-        .rank-number.top-3 { color: #e74c3c; font-size: 18px; }
-        .rank-title { flex-grow: 1; text-decoration: none; color: var(--text-color); font-weight: 500; }
-        .rank-title:hover { color: var(--accent-color); text-decoration: underline; }
-        
-        /* 社長指定修正：著者リンク用の青文字装飾 */
-        .author-link { color: #3498db; text-decoration: none; font-weight: bold; font-size: 12px; margin-left: 30px; margin-top: -5px; }
-        .author-link:hover { text-decoration: underline; }
-
-        .rank-score { font-size: 12px; color: #7f8c8d; background: #f1f2f6; padding: 2px 6px; border-radius: 4px; }
-        .rank-char-quote { font-size: 12px; color: #7f8c8d; font-style: italic; margin-left: 30px; margin-top: 2px; border-left: 2px solid #cbd5e1; padding-left: 6px; }
+        /* スマートフォン向け（画面幅768px以下）の完全レスポンシブ設定 */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 10px; text-align: center; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 8px; }
+            nav ul li a { font-size: 12px; padding: 3px 6px; }
+            .hero-section { padding: 30px 15px; margin: 10px; }
+            .hero-section h1 { font-size: 20px; }
+            .recommend-banner { margin: 10px; padding: 20px; }
+            .recommend-banner h2 { font-size: 15px; }
+            .main-container { margin: 10px; padding: 15px; }
+            .ranking-container { flex-direction: column; gap: 15px; }
+            .ranking-card { width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="nav-container">
-            <a href="index.html" class="logo">NOVESC<span>OPPO</span></a>
-            <nav>
-                <a href="index.html" class="active">トップ</a>
-                <a href="ranking.html">4大ランキング</a>
-                <a href="reader.html">読書ページ</a>
-                <a href="board.html">マーケボード</a>
-                <a href="gate.html">持ち込みゲート</a>
-                <a href="mypage_author.html">作家マイページ</a>
-                <a href="mypage_reader.html">読者マイページ</a>
-            </nav>
+<header>
+    <a href="#" class="logo">NOVESC<span>OPPO</span></a>
+    <nav>
+        <ul>
+            <li><a href="#" class="active">トップ</a></li>
+            <li><a href="#">4大ランキング</a></li>
+            <li><a href="#">読書ページ</a></li>
+            <li><a href="#">マーケボード</a></li>
+            <li><a href="#">持ち込みゲート</a></li>
+            <li><a href="#">作家マイページ</a></li>
+            <li><a href="#">読者マイページ</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="hero-section">
+    <h1>5人AI査定×読者トップ10で決まる次世代電子出版</h1>
+    <p>ノベルスコッパーへようこそ。</p>
+</div>
+
+<div class="recommend-banner">
+    <h2>🤔 今日何を読むか、迷っていませんか？</h2>
+    <a href="#" class="btn-orange"> Harrison今日のおすすめ小説を開く </a>
+</div>
+
+<div class="main-container">
+    <h2 class="section-title">📊 本日の中央注目ランキング（👑 TOP10）</h2>
+    <div class="ranking-container">
+        <div class="ranking-card">
+            <h3>① 総合AIランキング (TOP10)</h3>
+            <div class="rank-item"><span class="rank-number">1</span><a href="#" class="rank-title">機巧のアルケミスト</a><span class="rank-score">6850 pt</span></div>
+            <div class="rank-item"><span class="rank-number">2</span><a href="#" class="rank-title">異世界定食屋の朝</a><span class="rank-score">6720 pt</span></div>
         </div>
-    </header>
-
-    <main>
-        <div class="hero-section">
-            <h1>5人AI査定×読者トップ10で決まる次世代電子出版</h1>
-            <p>ノベルスコッパーへようこそ。</p>
+        <div class="ranking-card">
+            <h3>② AI×読者合算ランキング</h3>
+            <div class="rank-item"><span class="rank-number">1</span><a href="#" class="rank-title">機巧のアルケミスト</a><span class="rank-score">9120 pt</span></div>
+            <div class="rank-item"><span class="rank-number">2</span><a href="#" class="rank-title">異世界定食屋の朝</a><span class="rank-score">9000 pt</span></div>
         </div>
-
-        <div class="gacha-zone">
-            <h3>🤔 今日何を読むか、迷っていませんか？</h3>
-            <button class="gacha-btn" onclick="window.location.href='reader.html'">🎲 日替わりおすすめ小説を開く</button>
+        <div class="ranking-card">
+            <h3>④ 推しキャラランキング</h3>
+            <div class="rank-item"><span class="rank-number">1</span><a href="#" class="rank-title">エルザ（機巧のアルケミスト）</a><span class="rank-score">15.4M</span></div>
+            <div class="rank-item"><span class="rank-number">2</span><a href="#" class="rank-title">コタロー（異世界定食屋の朝）</a><span class="rank-score">12.1M</span></div>
         </div>
+    </div>
+</div>
 
-        <h2 class="section-title">📊 本日の中央注目ランキング（👑 TOP10）</h2>
-        <div class="ranking-preview-grid">
-            <div class="rank-card"><h3>① 総合AIランキング (TOP10)</h3><div id="ai-rank-list"></div></div>
-            <div class="rank-card"><h3>② AI×読者合算ランキング</h3><div id="hybrid-rank-list"></div></div>
-            <div class="rank-card"><h3>④ 推しキャラランキング</h3><div id="char-rank-list"></div></div>
-        </div>
-    </main>
-
-    <script>
-        const dummyNovels = [{title: "機巧のアルケミスト", author: "クロノス"}, {title: "異世界定食屋の朝", author: "タカシ"}, {title: "シンギュラリティ・コード", author: "レイ"}, {title: "東京ダンジョン・ウォー", author: "ブレイド"}, {title: "鋼鉄の覇王", author: "シン"}, {title: "魔法少女は引退したい", author: "アキ"}, {title: "漆黒 of ギルド", author: "レン"}, {title: "迷宮都市の調香師", author: "ルイ"}, {title: "ログアウト不可", author: "テツ"}, {title: "神々のダイコロ", author: "カミ"}];
-        const dummyChars = [{name: "エルザ", novel: "機巧のアルケミスト"}, {name: "コタロー", novel: "異世界定食屋の朝"}];
-
-        const aiList = document.getElementById('ai-rank-list');
-        const hybridList = document.getElementById('hybrid-rank-list');
-        const charList = document.getElementById('char-rank-list');
-
-        for(let i=0; i<10; i++) {
-            const numClass = (i < 3) ? 'rank-number top-3' : 'rank-number';
-            
-            // ① 総合AIリスト（社長指定：作者名から作者ページへ飛べる導線を追加）
-            aiList.innerHTML += `
-                <div class="rank-item">
-                    <div class="rank-item-main">
-                        <span class="${numClass}">${i+1}</span>
-                        <a href="reader.html" class="rank-title">${dummyNovels[i].title}</a>
-                        <span class="rank-score">${6850 - i*100} pt</span>
-                    </div>
-                    <a href="mypage_author.html" class="author-link">👤 著者: ${dummyNovels[i].author}</a>
-                </div>`;
-            
-            // ② 合算リスト（社長指定：作者名から作者ページへ飛べる導線を追加）
-            hybridList.innerHTML += `
-                <div class="rank-item">
-                    <div class="rank-item-main">
-                        <span class="${numClass}">${i+1}</span>
-                        <a href="reader.html" class="rank-title">${dummyNovels[i].title}</a>
-                        <span class="rank-score">${9120 - i*120} pt</span>
-                    </div>
-                    <a href="mypage_author.html" class="author-link">👤 著者: ${dummyNovels[i].author}</a>
-                </div>`;
-        }
-        
-        // ④ キャラリスト（維持）
-        for(let i=0; i<2; i++) {
-            charList.innerHTML += `<div class="rank-item"><div class="rank-item-main"><span class="rank-number top-3">${i+1}</span><span class="rank-title"><a href="reader.html" style="text-decoration:none; color:inherit; font-weight:bold;">${dummyChars[i].name}</a> <a href="reader.html" style="font-size:11px; color:#7f8c8d; text-decoration:none;">(${dummyChars[i].novel})</a></span><span class="rank-score">15.4M</span></div><div class="rank-char-quote">「おもしろい仕様変更ね」</div></div>`;
-        }
-    </script>
 </body>
 </html>
-/* スマホ（画面幅が768px以下）のときだけ適用する魔法の設定 */
-@media (max-width: 768px) {
-    /* ヘッダーのメニューを折り返して綺麗に収める */
-    header nav ul, .nav-links {
-        display: flex !important;
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 8px !important;
-        padding: 5px !important;
-    }
-    header nav ul li a, .nav-links a {
-        font-size: 11px !important; /* 文字をスマホ用に最適化 */
-        padding: 4px 6px !important;
-    }
-
-    /* キャッチコピーの文字サイズ調整 */
-    h1, .main-catch {
-        font-size: 24px !important;
-    }
-
-    /* ランキングの枠を、スマホでは「横並び」から「縦に1個ずつ並ぶ」ように変更 */
-    .ranking-container, .flex-container, [style*="display: flex"] {
-        flex-direction: column !important;
-        align-items: center !important;
-    }
-    .ranking-card, .rank-column, [style*="width: 30%"], [style*="width:30%"] {
-        width: 95% !important; /* スマホの画面幅いっぱいに広げる */
-        margin-bottom: 15px !important;
-    }
-}
