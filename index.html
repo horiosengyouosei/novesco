@@ -115,3 +115,33 @@
     </script>
 </body>
 </html>
+/* スマホ（画面幅が768px以下）のときだけ適用する魔法の設定 */
+@media (max-width: 768px) {
+    /* ヘッダーのメニューを折り返して綺麗に収める */
+    header nav ul, .nav-links {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 5px !important;
+    }
+    header nav ul li a, .nav-links a {
+        font-size: 11px !important; /* 文字をスマホ用に最適化 */
+        padding: 4px 6px !important;
+    }
+
+    /* キャッチコピーの文字サイズ調整 */
+    h1, .main-catch {
+        font-size: 24px !important;
+    }
+
+    /* ランキングの枠を、スマホでは「横並び」から「縦に1個ずつ並ぶ」ように変更 */
+    .ranking-container, .flex-container, [style*="display: flex"] {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    .ranking-card, .rank-column, [style*="width: 30%"], [style*="width:30%"] {
+        width: 95% !important; /* スマホの画面幅いっぱいに広げる */
+        margin-bottom: 15px !important;
+    }
+}
